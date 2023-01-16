@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const defaultTheme = require('tailwindcss/defaultTheme');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -13,7 +10,7 @@ module.exports = {
         lg: '1024px',
       },
       fontFamily: {
-        anton: ['Anton Regular', ...defaultTheme.fontFamily.sans],
+        anton: ['Anton Regular', 'sans-serif'],
       },
     },
   },

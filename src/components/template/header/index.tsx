@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import Logo from '@/components/block/logo';
 import getRandomColor from '@/utils/createColor';
 
 export default function Header() {
-  const [logoColor, setLogoColor] = useState('#000');
+  const [logoColor, setLogoColor] = useState('#000000');
 
   const onChangeColor = () => {
-    console.log(getRandomColor());
+    setLogoColor(getRandomColor());
   };
+
   return (
     <header>
       <div
@@ -14,9 +16,7 @@ export default function Header() {
         aria-label="haeder container"
       >
         <div>
-          <h1 onClick={onChangeColor}>
-            <span className={`font-anton text-${logoColor}`}>SUPISA-DEV</span>
-          </h1>
+          <Logo logoColor={logoColor} onChangeColor={onChangeColor} />
         </div>
       </div>
     </header>

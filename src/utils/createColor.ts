@@ -1,9 +1,11 @@
 import HEXADECIMAL from '@/constants/hexadecimal';
 
 export default function getRandomColor(): string {
-  const RANDOM = Math.floor(Math.random() * 17);
+  const result = [];
 
-  console.log(RANDOM);
-
-  return HEXADECIMAL[RANDOM];
+  for (let i = 0; i < 6; i++) {
+    const random = Math.floor(Math.random() * 16);
+    result.push(HEXADECIMAL[random]);
+  }
+  return '#' + result.join('');
 }
