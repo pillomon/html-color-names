@@ -28,6 +28,7 @@ export default function Search() {
       setView((prev) => {
         return { ...prev, closeIcon: false };
       });
+      setSearchResult([]);
     }
   };
 
@@ -36,9 +37,8 @@ export default function Search() {
   }, [searchResult]);
 
   return (
-    <form>
+    <form className="relative">
       <div className="inline-block w-auto h-auto relative">
-        <GrSearch className="absolute top-1/2 left-4 -translate-y-1/2 w-4 h-4" />
         <input
           type="text"
           value={searchText}
@@ -47,7 +47,7 @@ export default function Search() {
             changeInputState(e.target.value);
           }}
           placeholder="Enter color name or color hex"
-          className="w-96 pt-4 pl-14 pr-10 pb-4 rounded-md"
+          className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md"
         />
         {view.closeIcon ? (
           <GrClose
@@ -59,27 +59,37 @@ export default function Search() {
         ) : (
           <></>
         )}
+        <div className="absolute left-0 bottom-0 translate-y-full inline-block w-auto h-auto z-10">
+          <ul>
+            {searchResult.length !== 0 ? (
+              <>
+                {searchResult.map((element, idx) => {
+                  if (idx < 4) {
+                    return (
+                      <li
+                        key={idx}
+                        className="flex items-center w-96 h-auto whitespace-nowrap"
+                      >
+                        <GrSearch className="w-3 h-3" />
+                        <span>{element.name}</span>
+                        <div
+                          className="rounded-9999 w-4 h-4"
+                          style={{ backgroundColor: element.hex }}
+                        />
+                      </li>
+                    );
+                  }
+                })}
+                <li className="w-96 h-auto text-end items-center justify-end">
+                  <a>View More</a>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
+          </ul>
+        </div>
       </div>
-      <ul className="inline-block w-auto h-auto z-10">
-        {searchResult.length !== 0 ? (
-          <>
-            {searchResult.map((element, idx) => {
-              if (idx < 4) {
-                return (
-                  <li key={idx} className="inline-block w-96 h-auto">
-                    <span>{element.name}</span>
-                  </li>
-                );
-              }
-            })}
-            <li className="w-full h-auto flex items-center justify-end">
-              <a>View more</a>
-            </li>
-          </>
-        ) : (
-          <></>
-        )}
-      </ul>
     </form>
   );
 }
