@@ -1,4 +1,9 @@
-const COLOR = [
+export interface ColorType {
+  name: string;
+  hex: string;
+}
+
+export const COLORS: ColorType[] = [
   {
     name: 'AliceBlue',
     hex: '#F0F8FF',
@@ -592,5 +597,3 @@ const COLOR = [
     hex: '#9ACD32',
   },
 ];
-
-export default COLOR;
