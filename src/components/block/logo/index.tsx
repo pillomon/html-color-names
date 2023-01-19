@@ -13,7 +13,7 @@ export default function Logo({ logoColor, onChangeColor }: LogoProps) {
         className="font-magilio text-4xl leading-12 transition-colors duration-1000 ease-linear"
         style={{ color: logoColor }}
       >
-        SUPISA-DEV
+        SUPISA-COLOR
       </span>
     </h1>
   );

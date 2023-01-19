@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        'screen-full': '100vw',
+      },
       screens: {
         lg: '1024px',
       },

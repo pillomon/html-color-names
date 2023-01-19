@@ -1,4 +1,4 @@
-import HEXADECIMAL from '@/constants/hexadecimal';
+import { HEXADECIMAL } from '@/constants/hexadecimal';
 
 export default function getRandomColor(): string {
   const result = [];

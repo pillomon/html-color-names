@@ -1,4 +1,4 @@
-const HEXADECIMAL = [
+export const HEXADECIMAL = [
   '0',
   '1',
   '2',
@@ -16,5 +16,3 @@ const HEXADECIMAL = [
   'E',
   'F',
 ];
-
-export default HEXADECIMAL;

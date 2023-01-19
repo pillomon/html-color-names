@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { GrSearch, GrClose } from 'react-icons/gr';
+import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
 import { COLORS, ColorType } from '@/constants/color';
 
 export default function Search() {
@@ -16,14 +17,54 @@ export default function Search() {
         return { ...prev, closeIcon: true };
       });
 
-      const searchResult = COLORS.filter(
-        (element: ColorType) =>
-          element.name.toLowerCase().includes(value.toLocaleLowerCase()) ===
-          true,
-      );
+      if (value.split('')[0] === '#') {
+        const hexRegExp = /[0-9a-f]/i;
+        const valueSplitArr = value.split('');
+        let isHex = false;
 
-      if (searchResult.length !== 0) setSearchResult(searchResult);
-      else setSearchResult([]);
+        if (value.length === 7) {
+          console.log(true);
+          for (let idx = 1; idx < value.length; idx++) {
+            if (hexRegExp.test(valueSplitArr[idx])) isHex = true;
+            else {
+              isHex = false;
+              break;
+            }
+          }
+          if (isHex) {
+            const tempValue = value.padEnd(7, '0');
+            setSearchResult([{ name: '', hex: tempValue }]);
+          } else setSearchResult([]);
+        } else if (value.length < 8 && value.length > 1) {
+          for (let idx = 1; idx < value.length; idx++) {
+            if (hexRegExp.test(valueSplitArr[idx])) isHex = true;
+            else {
+              isHex = false;
+              break;
+            }
+          }
+          if (isHex) {
+            const tempValue = value.padEnd(7, '0');
+            setSearchResult([
+              { name: '', hex: tempValue },
+              { name: '', hex: tempValue.slice(0, -1) + '1' },
+              { name: '', hex: tempValue.slice(0, -1) + '2' },
+              { name: '', hex: tempValue.slice(0, -1) + '3' },
+            ]);
+          } else {
+            setSearchResult([]);
+          }
+        } else setSearchResult([]);
+      } else {
+        const newSearchResult = COLORS.filter(
+          (element: ColorType) =>
+            element.name.toLowerCase().includes(value.toLocaleLowerCase()) ===
+            true,
+        );
+
+        if (newSearchResult.length !== 0) setSearchResult(newSearchResult);
+        else setSearchResult([]);
+      }
     } else {
       setView((prev) => {
         return { ...prev, closeIcon: false };
@@ -32,12 +73,8 @@ export default function Search() {
     }
   };
 
-  useEffect(() => {
-    console.log(searchResult);
-  }, [searchResult]);
-
   return (
-    <form className="relative">
+    <form className="relative mb-10">
       <div className="inline-block w-auto h-auto relative">
         <input
           type="text"
@@ -46,43 +83,71 @@ export default function Search() {
           onChange={(e) => {
             changeInputState(e.target.value);
           }}
-          placeholder="Enter color name or color hex"
-          className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md"
+          placeholder="Ex) White or #FFFFFF"
+          className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md bg-[#10172a] text-[#fffeee] text-base outline-none"
         />
         {view.closeIcon ? (
-          <GrClose
-            className="absolute top-1/2 right-4 -translate-y-1/2 w-4 h-4 cursor-pointer"
-            onClick={() => {
-              changeInputState('');
-            }}
-          />
+          <span className="inline-block w-auto h-auto absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer">
+            <CloseIcon
+              className="text-[#fffeee]"
+              onClick={() => {
+                changeInputState('');
+              }}
+            />
+          </span>
         ) : (
           <></>
         )}
-        <div className="absolute left-0 bottom-0 translate-y-full inline-block w-auto h-auto z-10">
+        <div className="bg-[#10172a] absolute left-0 bottom-1 translate-y-full inline-block w-auto h-auto z-10 rounded-b-md">
           <ul>
             {searchResult.length !== 0 ? (
               <>
-                {searchResult.map((element, idx) => {
-                  if (idx < 4) {
+                {searchResult.map((_element, _idx) => {
+                  if (_idx < 4) {
                     return (
                       <li
-                        key={idx}
-                        className="flex items-center w-96 h-auto whitespace-nowrap"
+                        key={_idx}
+                        className="flex items-center justify-between w-96 h-auto cursor-pointer py-2 bg-[#10172a] hover:bg-[#101F4a] last:rounded-b-md"
                       >
-                        <GrSearch className="w-3 h-3" />
-                        <span>{element.name}</span>
+                        <span className="flex items-center gap-2 pl-4">
+                          <span className="flex items-center w-auto h-auto">
+                            <SearchIcon
+                              fontSize="small"
+                              className="blcok text-[#fffeee]"
+                            />
+                          </span>
+                          <span className="inline-block text-[#fffeee] text-base">
+                            {_element.name}
+                          </span>
+                          <span
+                            className={`inline-block text-[#fffeee] ${
+                              _element.name === '' ? 'text-base' : 'text-xs'
+                            }`}
+                          >
+                            {_element.hex.toUpperCase()}
+                          </span>
+                        </span>
                         <div
-                          className="rounded-9999 w-4 h-4"
-                          style={{ backgroundColor: element.hex }}
+                          className="rounded w-3 h-3 mr-4"
+                          style={{ backgroundColor: _element.hex }}
                         />
                       </li>
                     );
                   }
                 })}
-                <li className="w-96 h-auto text-end items-center justify-end">
-                  <a>View More</a>
-                </li>
+                {searchResult.length > 4 && searchText.split('')[0] !== '#' ? (
+                  <li className="w-96 h-auto text-end py-1 pr-4">
+                    <a
+                      href="#"
+                      rel="noreferrer noopener"
+                      className="cursor-pointer hover:underline text-[#fffeee] text-sm"
+                    >
+                      View More
+                    </a>
+                  </li>
+                ) : (
+                  <></>
+                )}
               </>
             ) : (
               <></>

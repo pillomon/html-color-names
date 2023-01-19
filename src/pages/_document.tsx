@@ -15,6 +15,10 @@ export default function Document() {
           name="keyword"
           content="browser color, color, hex, named color, web color, browser named color, hex color"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&display=optional"
+        />
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
       <body>
