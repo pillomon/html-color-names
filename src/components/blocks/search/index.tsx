@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import SearchList from '@/components/atoms/searchlist';
 import CloseIcon from '@material-ui/icons/Close';
-import SearchIcon from '@material-ui/icons/Search';
 import { COLORS, ColorType } from '@/constants/color';
 
 export default function Search() {
@@ -23,7 +23,6 @@ export default function Search() {
         let isHex = false;
 
         if (value.length === 7) {
-          console.log(true);
           for (let idx = 1; idx < value.length; idx++) {
             if (hexRegExp.test(valueSplitArr[idx])) isHex = true;
             else {
@@ -104,35 +103,7 @@ export default function Search() {
               <>
                 {searchResult.map((_element, _idx) => {
                   if (_idx < 4) {
-                    return (
-                      <li
-                        key={_idx}
-                        className="flex items-center justify-between w-96 h-auto cursor-pointer py-2 bg-[#10172a] hover:bg-[#101F4a] last:rounded-b-md"
-                      >
-                        <span className="flex items-center gap-2 pl-4">
-                          <span className="flex items-center w-auto h-auto">
-                            <SearchIcon
-                              fontSize="small"
-                              className="blcok text-[#fffeee]"
-                            />
-                          </span>
-                          <span className="inline-block text-[#fffeee] text-base">
-                            {_element.name}
-                          </span>
-                          <span
-                            className={`inline-block text-[#fffeee] ${
-                              _element.name === '' ? 'text-base' : 'text-xs'
-                            }`}
-                          >
-                            {_element.hex.toUpperCase()}
-                          </span>
-                        </span>
-                        <div
-                          className="rounded w-3 h-3 mr-4"
-                          style={{ backgroundColor: _element.hex }}
-                        />
-                      </li>
-                    );
+                    return <SearchList key={_idx} element={_element} />;
                   }
                 })}
                 {searchResult.length > 4 && searchText.split('')[0] !== '#' ? (

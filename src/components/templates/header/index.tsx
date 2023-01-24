@@ -2,8 +2,8 @@
 import { useState } from 'react';
 
 // Components
-import Logo from '@/components/block/logo';
-import ColorBall from '@/components/block/colorball';
+import Logo from '@/components/atoms/logo';
+import ColorBall from '@/components/atoms/colorball';
 
 // Utils
 import getRandomColor from '@/utils/getRandomColor';

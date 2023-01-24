@@ -1,4 +1,4 @@
-import ExLink from '@/components/block/exlink';
+import ExLink from '@/components/atoms/exlink';
 import { BsGithub } from 'react-icons/bs';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { SiNaver } from 'react-icons/si';
