@@ -9,8 +9,11 @@ interface SearchListProps {
 export default function SearchList({ element }: SearchListProps) {
   return (
     <Link
-      href={`/color/${encodeURIComponent(element.hex.slice(1))}`}
       className="block w-auto h-auto"
+      href={{
+        pathname: `/color/${encodeURIComponent(element.hex.slice(1))}`,
+        query: { name: element.name || '' },
+      }}
     >
       <li className="flex items-center justify-between w-96 h-auto cursor-pointer py-2 bg-[#10172a] hover:bg-[#101F4a] last:rounded-b-md">
         <span className="flex items-center gap-2 pl-4">
