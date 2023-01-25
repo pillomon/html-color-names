@@ -5,7 +5,7 @@ interface LogoProps {
 
 export default function Logo({ logoColor, onChangeColor }: LogoProps) {
   return (
-    <h1
+    <button
       className="inline-block w-auto h-auto pt-4 pb-2 cursor-pointer"
       onClick={() => onChangeColor()}
     >
@@ -15,6 +15,6 @@ export default function Logo({ logoColor, onChangeColor }: LogoProps) {
       >
         SUPISA-COLOR
       </span>
-    </h1>
+    </button>
   );
 }

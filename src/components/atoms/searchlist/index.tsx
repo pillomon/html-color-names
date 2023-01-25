@@ -8,14 +8,14 @@ interface SearchListProps {
 
 export default function SearchList({ element }: SearchListProps) {
   return (
-    <Link
-      className="block w-auto h-auto"
-      href={{
-        pathname: `/color/${encodeURIComponent(element.hex.slice(1))}`,
-        query: { name: element.name || '' },
-      }}
-    >
-      <li className="flex items-center justify-between w-96 h-auto cursor-pointer py-2 bg-[#10172a] hover:bg-[#101F4a] last:rounded-b-md">
+    <li className="w-96 h-auto cursor-pointer bg-[#10172a] last:rounded-b-md">
+      <Link
+        className="flex items-center justify-between py-2 w-auto h-auto hover:bg-[#101f4a] focus:bg-[#101f4a]"
+        href={{
+          pathname: `/color/${encodeURIComponent(element.hex.slice(1))}`,
+          query: { name: element.name || '' },
+        }}
+      >
         <span className="flex items-center gap-2 pl-4">
           <span className="flex items-center w-auto h-auto">
             <SearchIcon fontSize="small" className="blcok text-[#fffeee]" />
@@ -35,7 +35,7 @@ export default function SearchList({ element }: SearchListProps) {
           className="rounded w-3 h-3 mr-4"
           style={{ backgroundColor: element.hex }}
         />
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 }

@@ -5,26 +5,21 @@ import Search from '@/components/blocks/search';
 import Example from '@/components/blocks/example';
 import { getNegativeHex } from '@/utils/getNegativeHex';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import { useEffect } from 'react';
 
 interface MainProps {
   type: string;
-  id: string;
-  name: string;
+  hex?: string;
+  name?: string;
 }
 
-export default function Main({ type, id, name }: MainProps) {
+export default function Main({ type, hex, name }: MainProps) {
   if (type === 'color') {
     return (
       <>
         <Link className="absolute top-2 left-2" href="/">
-          <ArrowBack style={{ color: '#' + id }} />
+          <ArrowBack style={{ color: hex }} />
         </Link>
-        <Example
-          hex={'#' + id}
-          negativeHex={'#' + getNegativeHex(id)}
-          name={name}
-        />
+        <Example hex={hex} negativeHex={getNegativeHex(hex)} name={name} />
       </>
     );
   }

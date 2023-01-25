@@ -82,44 +82,46 @@ export default function Search() {
           onChange={(e) => {
             changeInputState(e.target.value);
           }}
+          onMouseEnter={() => {
+            inputRef.current?.focus();
+          }}
+          onMouseLeave={() => {
+            inputRef.current?.blur();
+          }}
           placeholder="Ex) White or #FFFFFF"
           className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md bg-[#10172a] text-[#fffeee] text-base outline-none"
         />
         {view.closeIcon ? (
-          <span className="inline-block w-auto h-auto absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer">
+          <button className="inline-block w-auto h-auto absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer">
             <CloseIcon
               className="text-[#fffeee]"
               onClick={() => {
                 changeInputState('');
               }}
             />
-          </span>
+          </button>
         ) : (
           <></>
         )}
         <div className="bg-[#10172a] absolute left-0 bottom-1 translate-y-full inline-block w-auto h-auto z-10 rounded-b-md">
           <ul>
-            {searchResult.length !== 0 ? (
+            {searchResult.length > 0 ? (
               <>
                 {searchResult.map((_element, _idx) => {
                   if (_idx < 4) {
                     return <SearchList key={_idx} element={_element} />;
                   }
                 })}
-                {searchResult.length > 4 && searchText.split('')[0] !== '#' ? (
-                  <li className="w-96 h-auto text-end py-1 pr-4">
-                    <a
-                      href="#"
-                      rel="noreferrer noopener"
-                      className="cursor-pointer hover:underline text-[#fffeee] text-sm"
-                    >
-                      View More
-                    </a>
-                  </li>
-                ) : (
-                  <></>
-                )}
               </>
+            ) : (
+              <></>
+            )}
+            {searchText.length > 0 && searchResult.length === 0 ? (
+              <li className="w-96 h-auto bg-[#10172a] py-2 flex items-center rounded-b-md">
+                <span className="inline-block pl-4 text-[#fffeee]">
+                  No color found
+                </span>
+              </li>
             ) : (
               <></>
             )}

@@ -2,11 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Main from '@/components/templates/main';
 
-export default function Color() {
-  const router = useRouter();
-  const id = router.query.id as string;
-  const name = router.query.name as string;
-
+export default function List() {
   return (
     <>
       <Head>

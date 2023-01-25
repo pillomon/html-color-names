@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
+
 interface ExampleProps {
-  hex: string;
-  negativeHex: string;
-  name: string;
+  hex?: string;
+  negativeHex?: string;
+  name?: string;
 }
 
 export default function Example({ hex, negativeHex, name }: ExampleProps) {
@@ -10,23 +12,23 @@ export default function Example({ hex, negativeHex, name }: ExampleProps) {
       className="w-full h-full"
       style={{ color: hex, backgroundColor: negativeHex }}
     >
-      <div className="flex flex-col items-start absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto">
+      <div className="flex flex-col items-start gap-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto">
         <div>
-          <h2>Color: {name === '' ? hex : name}</h2>
+          <span>Name: {name === '' ? '-' : name}</span>
         </div>
-        <div className="rounded hover:scale-105 transition-all">
+        <div>
+          <span>Hex: {hex?.toLowerCase()}</span>
+        </div>
+        <div className="group transition-all">
           <h2>What is Lorem Ipsum?</h2>
           <p>
-            <strong>Lorem Ipsum</strong> is simply dummy text of the printing
-            and typesetting industry. Lorem Ipsum has been the industry&apos;s
-            standard dummy text ever since the 1500s, when an unknown printer
-            took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was
-            popularised in the 1960s with the release of Letraset sheets
-            containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem
-            Ipsum.
+            <strong className="inline-block group-hover:scale-150 transition-all">
+              Lorem Ipsum
+            </strong>
+            is simply dummy text of the printing and typesetting industry. Lorem
+            Ipsum has been the industry&apos;s standard dummy text ever since
+            the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book.
           </p>
         </div>
         <div>

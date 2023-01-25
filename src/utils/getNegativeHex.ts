@@ -1,5 +1,6 @@
-export function getNegativeHex(hex: string): string {
-  const tempHexArr = hex.split('');
+export function getNegativeHex(hex: string | undefined): string {
+  if (hex === undefined) return '';
+  const tempHexArr = hex.slice(1).split('');
   const result = [];
 
   for (let i = 0; i < tempHexArr.length; i++) {
@@ -7,5 +8,5 @@ export function getNegativeHex(hex: string): string {
     result.push((15 - tempNum).toString(16));
   }
 
-  return result.join('');
+  return '#' + result.join('');
 }
