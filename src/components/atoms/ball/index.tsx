@@ -4,11 +4,7 @@ interface ColorBallProps {
   onChangeColor: (idx: number, color: string) => void;
 }
 
-export default function ColorBall({
-  idx,
-  color,
-  onChangeColor,
-}: ColorBallProps) {
+export default function Ball({ idx, color, onChangeColor }: ColorBallProps) {
   return (
     <div
       className={`w-8 h-8 rounded-full cursor-pointer`}

@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import useStore from '@/store/useStore';
 import Title from '@/components/atoms/title';
 import SubTitle from '@/components/atoms/subtitle';
 import Search from '@/components/blocks/search';
 import Example from '@/components/blocks/example';
 import { getNegativeHex } from '@/utils/getNegativeHex';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import Card from '@/components/atoms/card';
 
 interface MainProps {
   type?: string;
@@ -13,11 +15,14 @@ interface MainProps {
 }
 
 export default function Main({ type, hex, name }: MainProps) {
+  const searchResult = useStore((state) => state.searchResult);
+  const setSearchResult = useStore((state) => state.setSearchResult);
+
   if (type === 'color') {
     return (
       <>
-        <Link className="absolute top-2 left-2" href="/">
-          <ArrowBack style={{ color: hex }} />
+        <Link className="absolute top-4 left-4" href="/">
+          <ArrowBack style={{ color: hex }} fontSize="large" />
         </Link>
         <Example hex={hex} negativeHex={getNegativeHex(hex)} name={name} />
       </>
@@ -25,14 +30,43 @@ export default function Main({ type, hex, name }: MainProps) {
   }
 
   if (type === 'list') {
-    return <>test</>;
+    return (
+      <>
+        <Link
+          className="absolute top-4 left-4"
+          href="/"
+          onClick={() => setSearchResult([])}
+        >
+          <ArrowBack fontSize="large" />
+        </Link>
+        <div className="flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-auto">
+          {searchResult.length !== 0 ? (
+            searchResult.map((_element, _idx) => {
+              return (
+                <Card
+                  key={_idx}
+                  name={_element.name}
+                  hex={_element.hex}
+                  negativeHex={getNegativeHex(_element.hex)}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </div>
+      </>
+    );
+  }
+  if (type === 'home') {
+    return (
+      <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full">
+        <Title />
+        <SubTitle />
+        <Search />
+      </div>
+    );
   }
 
-  return (
-    <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full">
-      <Title />
-      <SubTitle />
-      <Search />
-    </div>
-  );
+  return <></>;
 }

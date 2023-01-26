@@ -11,7 +11,7 @@ export default function Search() {
   const searchResult = useStore((state) => state.searchResult);
   const setSearchResult = useStore((state) => state.setSearchResult);
 
-  const [searchKeyword, setsearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [view, setView] = useState({ closeIcon: false, searchList: false });
   const [focusItem, setFocusItem] = useState<number | null>(null);
 
@@ -20,7 +20,7 @@ export default function Search() {
   const ulRef = useRef<HTMLUListElement>(null);
 
   const changeInputState = (value: string) => {
-    setsearchKeyword(value);
+    setSearchKeyword(value);
     setView((prev) => {
       return { closeIcon: prev.closeIcon, searchList: true };
     });
@@ -130,6 +130,7 @@ export default function Search() {
         return false;
       }
     } else {
+      setSearchResult([foundColor]);
       router.push({
         pathname: '/list',
       });
@@ -156,7 +157,7 @@ export default function Search() {
       setFocusItem(null);
     } else {
       setFocusItem(focusItem - 1);
-      setsearchKeyword(searchResult[focusItem - 1].name);
+      setSearchKeyword(searchResult[focusItem - 1].name);
     }
 
     inputRef.current?.setSelectionRange(
@@ -185,16 +186,16 @@ export default function Search() {
 
     if (focusItem === null) {
       setFocusItem(0);
-      setsearchKeyword(searchResult[0].name);
+      setSearchKeyword(searchResult[0].name);
       return false;
     }
 
     if (listLength - 1 <= focusItem) {
       setFocusItem(0);
-      setsearchKeyword(searchResult[0].name);
+      setSearchKeyword(searchResult[0].name);
     } else {
       setFocusItem(focusItem + 1);
-      setsearchKeyword(searchResult[focusItem + 1].name);
+      setSearchKeyword(searchResult[focusItem + 1].name);
     }
   };
 

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // Components
 import Logo from '@/components/atoms/logo';
-import ColorBall from '@/components/atoms/colorball';
+import Ball from '@/components/atoms/ball';
 
 // Utils
 import getRandomColor from '@/utils/getRandomColor';
@@ -43,7 +43,7 @@ export default function Header() {
           {colorBalls.length !== 0 ? (
             colorBalls.map((_element, _idx) => {
               return (
-                <ColorBall
+                <Ball
                   key={_idx}
                   idx={_idx}
                   color={_element}

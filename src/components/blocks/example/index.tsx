@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 interface ExampleProps {
   hex?: string;
   negativeHex?: string;
