@@ -4,11 +4,16 @@ import { ColorType } from '@/constants/color';
 
 interface SearchListProps {
   element: ColorType;
+  selected: boolean;
 }
 
-export default function SearchList({ element }: SearchListProps) {
+export default function SearchList({ element, selected }: SearchListProps) {
   return (
-    <li className="w-96 h-auto cursor-pointer bg-[#10172a] last:rounded-b-md">
+    <li
+      className={`w-96 h-auto cursor-pointer ${
+        selected ? 'bg-[#101f4a]' : 'bg-[#10172a]'
+      } last:rounded-b-md`}
+    >
       <Link
         className="flex items-center justify-between py-2 w-auto h-auto hover:bg-[#101f4a] focus:bg-[#101f4a]"
         href={{

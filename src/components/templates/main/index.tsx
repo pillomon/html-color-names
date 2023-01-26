@@ -7,7 +7,7 @@ import { getNegativeHex } from '@/utils/getNegativeHex';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
 interface MainProps {
-  type: string;
+  type?: string;
   hex?: string;
   name?: string;
 }
@@ -23,6 +23,11 @@ export default function Main({ type, hex, name }: MainProps) {
       </>
     );
   }
+
+  if (type === 'list') {
+    return <>test</>;
+  }
+
   return (
     <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full">
       <Title />
