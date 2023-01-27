@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef, useState, KeyboardEvent } from 'react';
 import useStore from '@/store/useStore';
@@ -10,25 +11,27 @@ export default function Search() {
 
   const searchResult = useStore((state) => state.searchResult);
   const setSearchResult = useStore((state) => state.setSearchResult);
+  const focusItem = useStore((state) => state.focusItem);
+  const setFocusItem = useStore((state) => state.setFocusItem);
+  const searchListView = useStore((state) => state.searchListView);
+  const setSearchListView = useStore((state) => state.setSearchListView);
+  const tempKeyword = useStore((state) => state.tempKeyword);
+  const setTempKeyword = useStore((state) => state.setTempKeyword);
 
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [view, setView] = useState({ closeIcon: false, searchList: false });
-  const [focusItem, setFocusItem] = useState<number | null>(null);
+  const [closeIconView, setCloseIconView] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const closeIconRef = useRef<HTMLButtonElement>(null);
   const ulRef = useRef<HTMLUListElement>(null);
 
   const changeInputState = (value: string) => {
+    value === '' ? setSearchListView(false) : setSearchListView(true);
+    setTempKeyword(value);
     setSearchKeyword(value);
-    setView((prev) => {
-      return { closeIcon: prev.closeIcon, searchList: true };
-    });
     setFocusItem(null);
     if (value.length > 0) {
-      setView((prev) => {
-        return { ...prev, closeIcon: true };
-      });
+      setCloseIconView(true);
 
       if (value.split('')[0] === '#') {
         const hexRegExp = /[0-9a-f]/i;
@@ -45,7 +48,17 @@ export default function Search() {
           }
           if (isHex) {
             const tempValue = value.padEnd(7, '0');
-            setSearchResult([{ name: '', hex: tempValue }]);
+            const tempColor = COLORS.find(
+              (_element) =>
+                _element.hex.toLowerCase() === tempValue.toLowerCase(),
+            );
+
+            setSearchResult([
+              {
+                name: tempColor !== undefined ? tempColor.name : '',
+                hex: tempValue,
+              },
+            ]);
           } else setSearchResult([]);
         } else if (value.length < 8 && value.length > 1) {
           for (let idx = 1; idx < value.length; idx++) {
@@ -57,11 +70,42 @@ export default function Search() {
           }
           if (isHex) {
             const tempValue = value.padEnd(7, '0');
+            const tempColor_1 = COLORS.find(
+              (_element) =>
+                _element.hex.toLowerCase() === tempValue.toLowerCase(),
+            );
+            const tempColor_2 = COLORS.find(
+              (_element) =>
+                _element.hex.toLowerCase() ===
+                (tempValue.slice(0, -1) + '1').toLowerCase(),
+            );
+            const tempColor_3 = COLORS.find(
+              (_element) =>
+                _element.hex.toLowerCase() ===
+                (tempValue.slice(0, -1) + '2').toLowerCase(),
+            );
+            const tempColor_4 = COLORS.find(
+              (_element) =>
+                _element.hex.toLowerCase() ===
+                (tempValue.slice(0, -1) + '3').toLowerCase(),
+            );
             setSearchResult([
-              { name: '', hex: tempValue },
-              { name: '', hex: tempValue.slice(0, -1) + '1' },
-              { name: '', hex: tempValue.slice(0, -1) + '2' },
-              { name: '', hex: tempValue.slice(0, -1) + '3' },
+              {
+                name: tempColor_1 !== undefined ? tempColor_1.name : '',
+                hex: tempValue,
+              },
+              {
+                name: tempColor_2 !== undefined ? tempColor_2.name : '',
+                hex: tempValue.slice(0, -1) + '1',
+              },
+              {
+                name: tempColor_3 !== undefined ? tempColor_3.name : '',
+                hex: tempValue.slice(0, -1) + '2',
+              },
+              {
+                name: tempColor_4 !== undefined ? tempColor_4.name : '',
+                hex: tempValue.slice(0, -1) + '3',
+              },
             ]);
           } else {
             setSearchResult([]);
@@ -78,9 +122,7 @@ export default function Search() {
         else setSearchResult([]);
       }
     } else {
-      setView((prev) => {
-        return { ...prev, closeIcon: false };
-      });
+      setCloseIconView(false);
       setSearchResult([]);
     }
   };
@@ -132,7 +174,8 @@ export default function Search() {
     } else {
       setSearchResult([foundColor]);
       router.push({
-        pathname: '/list',
+        pathname: `/color/${encodeURIComponent(foundColor.hex.slice(1))}`,
+        query: { name: foundColor.name || '' },
       });
     }
   };
@@ -147,9 +190,8 @@ export default function Search() {
     if (searchResult.length === 0) return false;
 
     if (focusItem === null) {
-      setView((prev) => {
-        return { closeIcon: prev.closeIcon, searchList: false };
-      });
+      setSearchKeyword(tempKeyword);
+      setSearchListView(false);
       return false;
     }
 
@@ -157,7 +199,9 @@ export default function Search() {
       setFocusItem(null);
     } else {
       setFocusItem(focusItem - 1);
-      setSearchKeyword(searchResult[focusItem - 1].name);
+      searchResult[focusItem - 1].name === ''
+        ? setSearchKeyword(searchResult[focusItem - 1].hex)
+        : setSearchKeyword(searchResult[focusItem - 1].name);
     }
 
     inputRef.current?.setSelectionRange(
@@ -173,10 +217,8 @@ export default function Search() {
 
     if (searchResult.length === 0) return false;
 
-    if (focusItem === null && view.searchList === false) {
-      setView((prev) => {
-        return { closeIcon: prev.closeIcon, searchList: true };
-      });
+    if (focusItem === null && searchListView === false) {
+      setSearchListView(true);
       return false;
     }
 
@@ -186,16 +228,22 @@ export default function Search() {
 
     if (focusItem === null) {
       setFocusItem(0);
-      setSearchKeyword(searchResult[0].name);
+      searchResult[0].name === ''
+        ? setSearchKeyword(searchResult[0].hex)
+        : setSearchKeyword(searchResult[0].name);
       return false;
     }
 
     if (listLength - 1 <= focusItem) {
       setFocusItem(0);
-      setSearchKeyword(searchResult[0].name);
+      searchResult[0].name === ''
+        ? setSearchKeyword(searchResult[0].hex)
+        : setSearchKeyword(searchResult[0].name);
     } else {
       setFocusItem(focusItem + 1);
-      setSearchKeyword(searchResult[focusItem + 1].name);
+      searchResult[focusItem + 1].name === ''
+        ? setSearchKeyword(searchResult[focusItem + 1].hex)
+        : setSearchKeyword(searchResult[focusItem + 1].name);
     }
   };
 
@@ -220,10 +268,10 @@ export default function Search() {
             keyEvent('ArrowUp', e, onHandleArrowUp);
             keyEvent('ArrowDown', e, onHandleArrowBottom);
           }}
-          placeholder="Ex) White or #FFFFFF"
+          placeholder="Ex) White or # + Hex"
           className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md bg-[#10172a] text-[#fffeee] text-base outline-none"
         />
-        {view.closeIcon ? (
+        {closeIconView ? (
           <button
             ref={closeIconRef}
             className="inline-block w-auto h-auto absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
@@ -238,8 +286,8 @@ export default function Search() {
         ) : (
           <></>
         )}
-        {view.searchList && searchResult.length > 0 ? (
-          <div className="bg-[#10172a] absolute left-0 bottom-1 translate-y-full inline-block w-auto h-auto z-10 rounded-b-md">
+        {searchListView ? (
+          <div className="bg-[#10172a] absolute left-0 bottom-1 translate-y-full inline-block w-auto h-auto max-h-40 z-10 rounded-b-md">
             <ul ref={ulRef}>
               {searchResult.map((_element, _idx) => {
                 if (_idx < 4) {
@@ -247,6 +295,7 @@ export default function Search() {
                     return (
                       <SearchList
                         key={_idx}
+                        idx={_idx}
                         element={_element}
                         selected={true}
                       />
@@ -255,6 +304,7 @@ export default function Search() {
                     return (
                       <SearchList
                         key={_idx}
+                        idx={_idx}
                         element={_element}
                         selected={false}
                       />
@@ -262,6 +312,19 @@ export default function Search() {
                   }
                 }
               })}
+              {searchResult.length > 4 && searchKeyword.split('')[0] !== '#' ? (
+                <li className="w-96 h-auto bg-[#10172a] text-end py-1 pr-4 rounded-b-md">
+                  <Link
+                    href="/list"
+                    rel="noreferrer noopener"
+                    className="cursor-pointer hover:underline text-[#fffeee] text-sm"
+                  >
+                    View More({searchResult.length})
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )}
               {searchKeyword.length > 0 && searchResult.length === 0 ? (
                 <li className="w-96 h-auto bg-[#10172a] py-2 flex items-center rounded-b-md">
                   <span className="inline-block pl-4 text-[#fffeee]">

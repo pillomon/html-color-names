@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useState } from 'react';
 import useStore from '@/store/useStore';
 import Title from '@/components/atoms/title';
 import SubTitle from '@/components/atoms/subtitle';
@@ -17,6 +18,9 @@ interface MainProps {
 export default function Main({ type, hex, name }: MainProps) {
   const searchResult = useStore((state) => state.searchResult);
   const setSearchResult = useStore((state) => state.setSearchResult);
+  const setFocusItem = useStore((state) => state.setFocusItem);
+  const searchListView = useStore((state) => state.searchListView);
+  const setSearchListView = useStore((state) => state.setSearchListView);
 
   if (type === 'color') {
     return (
@@ -60,7 +64,13 @@ export default function Main({ type, hex, name }: MainProps) {
   }
   if (type === 'home') {
     return (
-      <div className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full">
+      <div
+        className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full"
+        onClick={() => {
+          setFocusItem(null);
+          setSearchListView(false);
+        }}
+      >
         <Title />
         <SubTitle />
         <Search />
