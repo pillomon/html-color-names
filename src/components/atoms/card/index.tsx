@@ -6,9 +6,17 @@ interface CardProps {
 
 export default function Card({ name, hex, negativeHex }: CardProps) {
   return (
-    <div className={`relative w-48 h-64`} style={{ backgroundColor: hex }}>
+    <div
+      className={`relative w-48 h-64 cursor-pointer hover:scale-105`}
+      style={{ backgroundColor: hex }}
+    >
       {name !== '' ? (
-        <span className="font-magilo absolute top-1 left-2">{name}</span>
+        <span
+          className="font-magilio absolute top-1 left-2"
+          style={{ color: negativeHex }}
+        >
+          {name}
+        </span>
       ) : (
         <></>
       )}

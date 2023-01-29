@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import useStore from '@/store/useStore';
 import Title from '@/components/atoms/title';
 import SubTitle from '@/components/atoms/subtitle';
@@ -10,7 +9,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import Card from '@/components/atoms/card';
 
 interface MainProps {
-  type?: string;
+  type: string;
   hex?: string;
   name?: string;
 }
@@ -19,13 +18,16 @@ export default function Main({ type, hex, name }: MainProps) {
   const searchResult = useStore((state) => state.searchResult);
   const setSearchResult = useStore((state) => state.setSearchResult);
   const setFocusItem = useStore((state) => state.setFocusItem);
-  const searchListView = useStore((state) => state.searchListView);
   const setSearchListView = useStore((state) => state.setSearchListView);
 
   if (type === 'color') {
     return (
       <>
-        <Link className="absolute top-4 left-4" href="/">
+        <Link
+          className="absolute top-4 left-4"
+          href="/"
+          onClick={() => setSearchResult([])}
+        >
           <ArrowBack style={{ color: hex }} fontSize="large" />
         </Link>
         <Example hex={hex} negativeHex={getNegativeHex(hex)} name={name} />
@@ -43,7 +45,7 @@ export default function Main({ type, hex, name }: MainProps) {
         >
           <ArrowBack fontSize="large" />
         </Link>
-        <div className="flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-auto">
+        <div className="pb-16 flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-auto">
           {searchResult.length !== 0 ? (
             searchResult.map((_element, _idx) => {
               return (

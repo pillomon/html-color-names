@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useRef, useState, KeyboardEvent } from 'react';
+import { useRef, useState, KeyboardEvent, useEffect } from 'react';
 import useStore from '@/store/useStore';
 import SearchList from '@/components/atoms/searchlist';
 import CloseIcon from '@material-ui/icons/Close';
@@ -159,18 +159,16 @@ export default function Search() {
 
     if (searchResult.length === 0) return false;
 
+    setSearchListView(false);
+
     const foundColor = COLORS.find(
       (_element) => _element.name === searchKeyword,
     );
 
     if (foundColor === undefined) {
-      if (searchResult.length > 0) {
-        router.push({
-          pathname: '/list',
-        });
-      } else {
-        return false;
-      }
+      router.push({
+        pathname: '/list',
+      });
     } else {
       setSearchResult([foundColor]);
       router.push({
@@ -189,14 +187,12 @@ export default function Search() {
 
     if (searchResult.length === 0) return false;
 
-    if (focusItem === null) {
-      setSearchKeyword(tempKeyword);
-      setSearchListView(false);
-      return false;
-    }
+    if (focusItem === null) return false;
 
     if (focusItem === 0) {
       setFocusItem(null);
+      setSearchKeyword(tempKeyword);
+      setSearchListView(false);
     } else {
       setFocusItem(focusItem - 1);
       searchResult[focusItem - 1].name === ''
@@ -234,7 +230,7 @@ export default function Search() {
       return false;
     }
 
-    if (listLength - 1 <= focusItem) {
+    if (listLength - 2 <= focusItem) {
       setFocusItem(0);
       searchResult[0].name === ''
         ? setSearchKeyword(searchResult[0].hex)
@@ -247,8 +243,12 @@ export default function Search() {
     }
   };
 
+  useEffect(() => {
+    console.log(searchResult);
+  }, [searchResult]);
+
   return (
-    <form className="relative mb-10">
+    <form className="relative mb-20">
       <div className="inline-block w-auto h-auto relative">
         <input
           type="text"
@@ -287,7 +287,7 @@ export default function Search() {
           <></>
         )}
         {searchListView ? (
-          <div className="bg-[#10172a] absolute left-0 bottom-1 translate-y-full inline-block w-auto h-auto max-h-40 z-10 rounded-b-md">
+          <div className="bg-[#10172a] absolute left-0 bottom-1 translate-y-full inline-block w-auto h-auto max-h-40 z-20 rounded-b-md">
             <ul ref={ulRef}>
               {searchResult.map((_element, _idx) => {
                 if (_idx < 4) {
