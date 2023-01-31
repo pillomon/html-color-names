@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import useStore from '@/store/useStore';
 import Title from '@/components/atoms/title';
@@ -22,6 +23,8 @@ export default function Main({ type, hex, name }: MainProps) {
   const setFocusItem = useStore((state) => state.setFocusItem);
   const setSearchListView = useStore((state) => state.setSearchListView);
 
+  const closeIconRef = useRef<HTMLAnchorElement>(null);
+
   if (type === 'color') {
     return (
       <main className="w-full h-[calc(100vh-8rem)] relative">
@@ -40,9 +43,9 @@ export default function Main({ type, hex, name }: MainProps) {
 
   if (type === 'list') {
     return (
-      <main className="w-full h-auto relative inline-block">
+      <main className="w-full h-auto min-h-[calc(100vh-8rem)] relative inline-block overflow-y-scroll">
         <a
-          className="sticky top-6 left-4 inline-block w-auto h-auto cursor-pointer"
+          className="sticky top-4 left-4 inline-block w-auto h-auto cursor-pointer"
           onClick={() => {
             setSearchResult([]);
             router.back();
@@ -50,7 +53,7 @@ export default function Main({ type, hex, name }: MainProps) {
         >
           <ArrowBack fontSize="large" />
         </a>
-        <div className="pb-16 flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-6 left-1/2 -translate-x-1/2 w-[70%] h-auto">
+        <div className="pb-8 flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-6 left-1/2 -translate-x-1/2 w-[70%] h-auto">
           {searchResult.length !== 0 ? (
             searchResult.map((_element, _idx) => {
               return (
