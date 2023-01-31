@@ -8,7 +8,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>HTML Color Names</title>
       </Head>
-      <Main type={'home'} />
+      <Main type={'home'} hex={''} name={''} />
     </>
   );
 }

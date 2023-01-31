@@ -1,4 +1,4 @@
-interface LogoProps {
+export interface LogoProps {
   logoColor: string;
   onChangeColor: (idx: void, color: void) => void;
 }

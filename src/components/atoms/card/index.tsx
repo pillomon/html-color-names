@@ -1,5 +1,7 @@
-interface CardProps {
-  name?: string;
+import Link from 'next/link';
+
+export interface CardProps {
+  name: string;
   hex: string;
   negativeHex: string;
 }
@@ -7,25 +9,33 @@ interface CardProps {
 export default function Card({ name, hex, negativeHex }: CardProps) {
   return (
     <div
-      className={`relative w-48 h-64 cursor-pointer hover:scale-105`}
+      className={`w-48 h-64 cursor-pointer hover:scale-105`}
       style={{ backgroundColor: hex }}
     >
-      {name !== '' ? (
+      <Link
+        className="relative block w-full h-full"
+        href={{
+          pathname: `/color/${encodeURIComponent(hex.slice(1))}`,
+          query: { name: name || '' },
+        }}
+      >
+        {name !== '' ? (
+          <span
+            className="font-magilio absolute top-1 left-2"
+            style={{ color: negativeHex }}
+          >
+            {name}
+          </span>
+        ) : (
+          <></>
+        )}
         <span
-          className="font-magilio absolute top-1 left-2"
+          className="inline-block font-magilio absolute bottom-1 right-2"
           style={{ color: negativeHex }}
         >
-          {name}
+          {hex.toUpperCase()}
         </span>
-      ) : (
-        <></>
-      )}
-      <span
-        className="inline-block font-magilio absolute bottom-1 right-2"
-        style={{ color: negativeHex }}
-      >
-        {hex}
-      </span>
+      </Link>
     </div>
   );
 }

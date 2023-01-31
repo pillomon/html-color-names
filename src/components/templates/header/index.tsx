@@ -1,12 +1,7 @@
-// React
 import { useState } from 'react';
-
-// Components
 import Logo from '@/components/atoms/logo';
 import Ball from '@/components/atoms/ball';
-
-// Utils
-import getRandomColor from '@/utils/getRandomColor';
+import { getRandomColor } from '@/utils/getRandomColor';
 
 export default function Header() {
   const [logoColor, setLogoColor] = useState('#eeeeee');

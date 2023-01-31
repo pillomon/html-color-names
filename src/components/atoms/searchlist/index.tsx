@@ -3,7 +3,7 @@ import useStore from '@/store/useStore';
 import SearchIcon from '@material-ui/icons/Search';
 import { ColorType } from '@/constants/color';
 
-interface SearchListProps {
+export interface SearchListProps {
   idx: number;
   element: ColorType;
   selected: boolean;
@@ -15,6 +15,7 @@ export default function SearchList({
   selected,
 }: SearchListProps) {
   const setFocusItem = useStore((state) => state.setFocusItem);
+  const setSearchResult = useStore((state) => state.setSearchResult);
 
   return (
     <li
@@ -30,10 +31,11 @@ export default function SearchList({
           pathname: `/color/${encodeURIComponent(element.hex.slice(1))}`,
           query: { name: element.name || '' },
         }}
+        onClick={() => setSearchResult([])}
       >
         <span className="flex items-center gap-2 pl-4">
           <span className="flex items-center w-auto h-auto">
-            <SearchIcon fontSize="small" className="block text-[#fffeee]" />
+            <SearchIcon className="block text-[#fffeee]" fontSize="small" />
           </span>
           {element.name !== '' ? (
             <span className="inline-block text-[#fffeee] text-base">

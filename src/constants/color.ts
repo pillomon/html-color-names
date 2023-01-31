@@ -105,10 +105,6 @@ export const COLORS: ColorType[] = [
     hex: '#A9A9A9',
   },
   {
-    name: 'DarkGrey',
-    hex: '#A9A9A9',
-  },
-  {
     name: 'DarkGreen',
     hex: '#006400',
   },
@@ -153,10 +149,6 @@ export const COLORS: ColorType[] = [
     hex: '#2F4F4F',
   },
   {
-    name: 'DarkSlateGrey',
-    hex: '#2F4F4F',
-  },
-  {
     name: 'DarkTurquoise',
     hex: '#00CED1',
   },
@@ -174,10 +166,6 @@ export const COLORS: ColorType[] = [
   },
   {
     name: 'DimGray',
-    hex: '#696969',
-  },
-  {
-    name: 'DimGrey',
     hex: '#696969',
   },
   {
@@ -218,10 +206,6 @@ export const COLORS: ColorType[] = [
   },
   {
     name: 'Gray',
-    hex: '#808080',
-  },
-  {
-    name: 'Grey',
     hex: '#808080',
   },
   {
@@ -293,10 +277,6 @@ export const COLORS: ColorType[] = [
     hex: '#D3D3D3',
   },
   {
-    name: 'LightGrey',
-    hex: '#D3D3D3',
-  },
-  {
     name: 'LightGreen',
     hex: '#90EE90',
   },
@@ -318,10 +298,6 @@ export const COLORS: ColorType[] = [
   },
   {
     name: 'LightSlateGray',
-    hex: '#778899',
-  },
-  {
-    name: 'LightSlateGrey',
     hex: '#778899',
   },
   {
@@ -534,10 +510,6 @@ export const COLORS: ColorType[] = [
   },
   {
     name: 'SlateGray',
-    hex: '#708090',
-  },
-  {
-    name: 'SlateGrey',
     hex: '#708090',
   },
   {

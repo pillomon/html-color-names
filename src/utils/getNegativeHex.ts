@@ -8,5 +8,5 @@ export function getNegativeHex(hex: string | undefined): string {
     result.push((15 - tempNum).toString(16));
   }
 
-  return '#' + result.join('');
+  return '#' + result.join('').toUpperCase();
 }

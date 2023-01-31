@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useRef, useState, KeyboardEvent, useEffect } from 'react';
+import { useRef, useState, KeyboardEvent } from 'react';
 import useStore from '@/store/useStore';
 import SearchList from '@/components/atoms/searchlist';
 import CloseIcon from '@material-ui/icons/Close';
@@ -243,14 +243,11 @@ export default function Search() {
     }
   };
 
-  useEffect(() => {
-    console.log(searchResult);
-  }, [searchResult]);
-
   return (
     <form className="relative mb-20">
       <div className="inline-block w-auto h-auto relative">
         <input
+          className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md bg-[#10172a] text-[#fffeee] text-base outline-none"
           type="text"
           value={searchKeyword}
           ref={inputRef}
@@ -269,12 +266,11 @@ export default function Search() {
             keyEvent('ArrowDown', e, onHandleArrowBottom);
           }}
           placeholder="Ex) White or # + Hex"
-          className="w-96 pt-4 pl-4 pr-10 pb-4 rounded-md bg-[#10172a] text-[#fffeee] text-base outline-none"
         />
         {closeIconView ? (
           <button
-            ref={closeIconRef}
             className="inline-block w-auto h-auto absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
+            ref={closeIconRef}
           >
             <CloseIcon
               className="text-[#fffeee]"
@@ -315,9 +311,9 @@ export default function Search() {
               {searchResult.length > 4 && searchKeyword.split('')[0] !== '#' ? (
                 <li className="w-96 h-auto bg-[#10172a] text-end py-1 pr-4 rounded-b-md">
                   <Link
+                    className="cursor-pointer hover:underline text-[#fffeee] text-sm"
                     href="/list"
                     rel="noreferrer noopener"
-                    className="cursor-pointer hover:underline text-[#fffeee] text-sm"
                   >
                     View More({searchResult.length})
                   </Link>

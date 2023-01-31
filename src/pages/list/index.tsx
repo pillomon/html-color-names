@@ -8,7 +8,7 @@ export default function List() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>HTML Color Names</title>
       </Head>
-      <Main type={'list'} />
+      <Main type={'list'} hex={''} name={''} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import useStore from '@/store/useStore';
 import Title from '@/components/atoms/title';
 import SubTitle from '@/components/atoms/subtitle';
@@ -8,13 +8,15 @@ import { getNegativeHex } from '@/utils/getNegativeHex';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import Card from '@/components/atoms/card';
 
-interface MainProps {
+export interface MainProps {
   type: string;
-  hex?: string;
-  name?: string;
+  hex: string;
+  name: string;
 }
 
 export default function Main({ type, hex, name }: MainProps) {
+  const router = useRouter();
+
   const searchResult = useStore((state) => state.searchResult);
   const setSearchResult = useStore((state) => state.setSearchResult);
   const setFocusItem = useStore((state) => state.setFocusItem);
@@ -23,13 +25,14 @@ export default function Main({ type, hex, name }: MainProps) {
   if (type === 'color') {
     return (
       <>
-        <Link
-          className="absolute top-4 left-4"
-          href="/"
-          onClick={() => setSearchResult([])}
+        <a
+          className="absolute top-4 left-4 cursor-pointer"
+          onClick={() => {
+            router.back();
+          }}
         >
           <ArrowBack style={{ color: hex }} fontSize="large" />
-        </Link>
+        </a>
         <Example hex={hex} negativeHex={getNegativeHex(hex)} name={name} />
       </>
     );
@@ -38,13 +41,15 @@ export default function Main({ type, hex, name }: MainProps) {
   if (type === 'list') {
     return (
       <>
-        <Link
-          className="absolute top-4 left-4"
-          href="/"
-          onClick={() => setSearchResult([])}
+        <a
+          className="absolute top-4 left-4 cursor-pointer"
+          onClick={() => {
+            setSearchResult([]);
+            router.back();
+          }}
         >
           <ArrowBack fontSize="large" />
-        </Link>
+        </a>
         <div className="pb-16 flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-auto">
           {searchResult.length !== 0 ? (
             searchResult.map((_element, _idx) => {

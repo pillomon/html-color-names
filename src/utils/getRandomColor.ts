@@ -1,6 +1,6 @@
 import { HEXADECIMAL } from '@/constants/hexadecimal';
 
-export default function getRandomColor(): string {
+export function getRandomColor(): string {
   const result = [];
 
   for (let idx = 0; idx < 6; idx++) {

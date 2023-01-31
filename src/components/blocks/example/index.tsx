@@ -1,7 +1,7 @@
-interface ExampleProps {
-  hex?: string;
-  negativeHex?: string;
-  name?: string;
+export interface ExampleProps {
+  hex: string;
+  negativeHex: string;
+  name: string;
 }
 
 export default function Example({ hex, negativeHex, name }: ExampleProps) {
