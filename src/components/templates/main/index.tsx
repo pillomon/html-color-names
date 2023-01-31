@@ -43,9 +43,9 @@ export default function Main({ type, hex, name }: MainProps) {
 
   if (type === 'list') {
     return (
-      <main className="w-full h-auto min-h-[calc(100vh-8rem)] relative inline-block overflow-y-scroll">
+      <main className="w-full h-auto min-h-screen relative inline-block">
         <a
-          className="sticky top-4 left-4 inline-block w-auto h-auto cursor-pointer"
+          className="sticky top-4 left-4 mt-4 inline-block w-auto h-auto cursor-pointer"
           onClick={() => {
             setSearchResult([]);
             router.back();
