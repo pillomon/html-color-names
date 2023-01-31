@@ -10,7 +10,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <main className="w-full h-[calc(100vh-8rem)] relative">{children}</main>
+      {children}
       <Footer />
     </>
   );

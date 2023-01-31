@@ -24,9 +24,9 @@ export default function Main({ type, hex, name }: MainProps) {
 
   if (type === 'color') {
     return (
-      <>
+      <main className="w-full h-[calc(100vh-8rem)] relative">
         <a
-          className="absolute top-4 left-4 cursor-pointer"
+          className="absolute top-4 left-4 inline-block w-auto h-auto cursor-pointer"
           onClick={() => {
             router.back();
           }}
@@ -34,15 +34,15 @@ export default function Main({ type, hex, name }: MainProps) {
           <ArrowBack style={{ color: hex }} fontSize="large" />
         </a>
         <Example hex={hex} negativeHex={getNegativeHex(hex)} name={name} />
-      </>
+      </main>
     );
   }
 
   if (type === 'list') {
     return (
-      <>
+      <main className="w-full h-auto relative inline-block">
         <a
-          className="absolute top-4 left-4 cursor-pointer"
+          className="sticky top-6 left-4 inline-block w-auto h-auto cursor-pointer"
           onClick={() => {
             setSearchResult([]);
             router.back();
@@ -50,7 +50,7 @@ export default function Main({ type, hex, name }: MainProps) {
         >
           <ArrowBack fontSize="large" />
         </a>
-        <div className="pb-16 flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-auto">
+        <div className="pb-16 flex flex-wrap justify-around items-start content-center gap-y-5 absolute top-6 left-1/2 -translate-x-1/2 w-[70%] h-auto">
           {searchResult.length !== 0 ? (
             searchResult.map((_element, _idx) => {
               return (
@@ -66,22 +66,24 @@ export default function Main({ type, hex, name }: MainProps) {
             <></>
           )}
         </div>
-      </>
+      </main>
     );
   }
   if (type === 'home') {
     return (
-      <div
-        className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full"
-        onClick={() => {
-          setFocusItem(null);
-          setSearchListView(false);
-        }}
-      >
-        <Title />
-        <SubTitle />
-        <Search />
-      </div>
+      <main className="w-full h-[calc(100vh-8rem)] relative">
+        <div
+          className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto max-w-screen-full"
+          onClick={() => {
+            setFocusItem(null);
+            setSearchListView(false);
+          }}
+        >
+          <Title />
+          <SubTitle />
+          <Search />
+        </div>
+      </main>
     );
   }
 
