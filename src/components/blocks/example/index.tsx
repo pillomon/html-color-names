@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export interface ExampleProps {
   hex: string;
   negativeHex: string;
@@ -5,6 +7,7 @@ export interface ExampleProps {
 }
 
 export default function Example({ hex, negativeHex, name }: ExampleProps) {
+  const [isHover, setIsHvoer] = useState(false);
   return (
     <div
       className="w-full h-full"
@@ -17,23 +20,33 @@ export default function Example({ hex, negativeHex, name }: ExampleProps) {
         <div>
           <span>Hex: {hex?.toLowerCase()}</span>
         </div>
-        <div className="group transition-all">
+        <div>
+          <br />
+          <hr />
+          <br />
           <h2>What is Lorem Ipsum?</h2>
-          <p>
-            <strong className="inline-block group-hover:scale-150 transition-all">
+          <p
+            className="group text-base"
+            onMouseEnter={() => setIsHvoer(!isHover)}
+            onMouseLeave={() => setIsHvoer(!isHover)}
+          >
+            <strong className="inline-block w-auto h-auto group-hover:text-8xl transition-all">
               Lorem Ipsum
             </strong>
-            <span className="inline group-hover:text-transparent transition-all">
+            <span className={`${isHover ? 'invisible' : 'visible'}`}>
               &nbsp;is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry&apos;s standard dummy
               text ever since the 1500s, when an unknown printer took a galley
               of type and scrambled it to make a type specimen book.
             </span>
           </p>
+          <br />
+          <hr />
+          <br />
         </div>
         <div>
           <button
-            className="rounded w-20 h-10 active:scale-90 transition-all"
+            className="rounded active:scale-110 w-20 h-10 transition-all"
             style={{ color: negativeHex, backgroundColor: hex }}
           >
             button

@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import useStore from '@/store/useStore';
 import Title from '@/components/atoms/title';
@@ -23,8 +22,6 @@ export default function Main({ type, hex, name }: MainProps) {
   const setFocusItem = useStore((state) => state.setFocusItem);
   const setSearchListView = useStore((state) => state.setSearchListView);
 
-  const closeIconRef = useRef<HTMLAnchorElement>(null);
-
   if (type === 'color') {
     return (
       <main className="w-full h-[calc(100vh-8rem)] relative">
@@ -43,9 +40,10 @@ export default function Main({ type, hex, name }: MainProps) {
 
   if (type === 'list') {
     return (
-      <main className="w-full h-auto min-h-screen relative inline-block">
+      <main className="w-full h-auto min-h-[calc(100vh-8rem)] relative inline-block">
+        <div className="top-4 left-4" />
         <a
-          className="sticky top-4 left-4 mt-4 inline-block w-auto h-auto cursor-pointer"
+          className="sticky top-4 left-4 inline-block w-auto h-auto cursor-pointer"
           onClick={() => {
             setSearchResult([]);
             router.back();
