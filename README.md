@@ -28,4 +28,4 @@
 
 ### [Demo](https://html-color-names-nu.vercel.app)
 
-### [Youtube](https://www.youtube.com)
+### [Youtube](https://youtu.be/rHHmO9xXY5w)
